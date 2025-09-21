@@ -1,83 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>बिल बनाउनुहोस</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>बिल बनाउनुहोस</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
 </head>
 <body class="container mt-5">
-    <h2 class="text-center">बिल बनाउनुहोस</h2>
-    <div class="card p-4 shadow">
-        <div class="mb-3">
-            <label class="form-label">सुनको तौल (लाल)</label>
-            <input type="number" class="form-control" id="goldWeight" placeholder="सुनको तौल लालमा टाइप गर्नुहोस">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">जर्ति (लाल)</label>
-            <input type="number" class="form-control" id="extraGoldWeight" placeholder="जर्ति लालमा टाइप गर्नुहोस">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">सुनको दर (प्रति तोला)</label>
-            <input type="number" class="form-control" id="goldRate" placeholder="प्रति तोला सुनको दर टाइप गर्नुहोस (रुपैयामा)">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">ज्याला</label>
-            <input type="number" class="form-control" id="workerCost" placeholder="ज्याला टाइप गर्नुहोस (रुपैयामा)">
-        </div>
-        <button class="btn btn-primary w-100" onclick="calculateBill()">बिल निकाल्नुहोस्</button>
-        
-        <div class="mt-4 row">
-            <div class="col-md-6 p-3 border bg-light">
-                <h5>बिल (लाल मा)</h5>
-                <p id="resultLaal"></p>
-            </div>
-            <div class="col-md-6 p-3 border bg-light">
-                <h5>बिल (ग्राम मा)</h5>
-                <p id="resultGram"></p>
-            </div>
-        </div>
-    </div>
-    
-    <script>
-        function calculateBill() {
-            const LAAL_TO_TOLA = 0.01; // Assuming 1 laal = 0.01 tola
-            const TOLA_TO_GRAM = 11.664;
-            
-            let goldWeightLaal = parseFloat(document.getElementById("goldWeight").value) || 0;
-            let extraGoldWeightLaal = parseFloat(document.getElementById("extraGoldWeight").value) || 0;
-            let goldRate = parseFloat(document.getElementById("goldRate").value) || 0;
-            let workerCost = parseFloat(document.getElementById("workerCost").value) || 0;
-            
-            let goldWeightTola = goldWeightLaal * LAAL_TO_TOLA;
-            let extraGoldWeightTola = extraGoldWeightLaal * LAAL_TO_TOLA;
-            
-            let goldWeightGrams = goldWeightTola * TOLA_TO_GRAM;
-            let extraGoldWeightGrams = extraGoldWeightTola * TOLA_TO_GRAM;
-            let totalWeightGrams = goldWeightGrams + extraGoldWeightGrams;
-            let totalGoldCost = (goldWeightTola + extraGoldWeightTola) * goldRate;
-            let totalPrice = totalGoldCost + workerCost;
-            
-            document.getElementById("resultLaal").innerHTML = `
-                सुनको तौल: <strong>${goldWeightLaal.toFixed(1)} लाल</strong><br>
-                जर्ति: <strong>${extraGoldWeightLaal.toFixed(1)} लाल</strong><br>
-                जम्मा सुनको तौल: <strong>${(goldWeightLaal + extraGoldWeightLaal).toFixed(1)} लाल</strong><br>
-                जम्मा सुनको रकम: <strong>रु. ${totalGoldCost.toFixed(0)}</strong><br>
-                ज्याला: <strong>रु. ${workerCost.toFixed(0)}</strong><br>
-                <hr>
-                <strong>जम्मा रकम: रु. ${totalPrice.toFixed(0)}</strong>
-            `;
+  <h2 class="text-center">बिल बनाउनुहोस</h2>
 
-            document.getElementById("resultGram").innerHTML = `
-                सुनको तौल: <strong>${goldWeightGrams.toFixed(3)} ग्राम</strong><br>
-                जर्ति: <strong>${extraGoldWeightGrams.toFixed(3)} ग्राम</strong><br>
-                जम्मा सुनको तौल: <strong>${totalWeightGrams.toFixed(3)} ग्राम</strong><br>
-                जम्मा सुनको रकम: <strong>रु. ${totalGoldCost.toFixed(0)}</strong><br>
-                ज्याला: <strong>रु. ${workerCost.toFixed(0)}</strong><br>
-                <hr>
-                <strong>जम्मा रकम: रु. ${totalPrice.toFixed(0)}</strong>
-            `;
-        }
-    </script>
+  <!-- Laal Input Div -->
+  <div class="card p-4 shadow mb-5">
+    <h4 class="text-center">लाल देखि ग्राम  मा</h4>
+    <div class="mb-3">
+      <label class="form-label">सुनको तौल (लाल)</label>
+      <input type="number" class="form-control" id="goldWeightLaal" placeholder="सुनको तौल लालमा टाइप गर्नुहोस">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">जर्ति (लाल)</label>
+      <input type="number" class="form-control" id="extraGoldWeightLaal" placeholder="जर्ति लालमा टाइप गर्नुहोस">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">सुनको दर (प्रति तोला)</label>
+      <input type="number" class="form-control" id="goldRateLaal" placeholder="प्रति तोला सुनको दर टाइप गर्नुहोस (रुपैयामा)">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">ज्याला</label>
+      <input type="number" class="form-control" id="workerCostLaal" placeholder="ज्याला टाइप गर्नुहोस (रुपैयामा)">
+    </div>
+    <button class="btn btn-primary w-100" onclick="calculateLaalBill()">बिल निकाल्नुहोस्</button>
+
+    <div class="mt-4 row">
+      <div class="col-md-6 p-3 border bg-light">
+        <h5>बिल (लाल मा)</h5>
+        <p id="resultLaal"></p>
+      </div>
+      <div class="col-md-6 p-3 border bg-light">
+        <h5>बिल (ग्राम मा)</h5>
+        <p id="resultGram"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gram Input Div -->
+  <div class="card p-4 shadow">
+    <h4 class="text-center">ग्राम देखि लाल मा</h4>
+    <div class="mb-3">
+      <label class="form-label">सुनको तौल (ग्राम)</label>
+      <input type="number" class="form-control" id="goldWeightGram" placeholder="सुनको तौल ग्राममा टाइप गर्नुहोस">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">जर्ति (ग्राम)</label>
+      <input type="number" class="form-control" id="extraGoldWeightGram" placeholder="जर्ति ग्राममा टाइप गर्नुहोस">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">सुनको दर (प्रति तोला)</label>
+      <input type="number" class="form-control" id="goldRateGram" placeholder="प्रति तोला सुनको दर टाइप गर्नुहोस (रुपैयामा)">
+    </div>
+    <div class="mb-3">
+      <label class="form-label">ज्याला</label>
+      <input type="number" class="form-control" id="workerCostGram" placeholder="ज्याला टाइप गर्नुहोस (रुपैयामा)">
+    </div>
+    <button class="btn btn-success w-100" onclick="calculateGramBill()">बिल निकाल्नुहोस्</button>
+
+    <div class="mt-4 row">
+      <div class="col-md-6 p-3 border bg-light">
+        <h5>बिल (लाल मा)</h5>
+        <p id="resultLaalGram"></p>
+      </div>
+      <div class="col-md-6 p-3 border bg-light">
+        <h5>बिल (ग्राम मा)</h5>
+        <p id="resultGramGram"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const LAAL_TO_TOLA = 0.01;
+    const TOLA_TO_GRAM = 11.664;
+    const GRAM_TO_TOLA = 1 / TOLA_TO_GRAM;
+    const TOLA_TO_LAAL = 100;
+
+    function calculateLaalBill() {
+      let goldWeightLaal = parseFloat(document.getElementById("goldWeightLaal").value) || 0;
+      let extraGoldWeightLaal = parseFloat(document.getElementById("extraGoldWeightLaal").value) || 0;
+      let goldRate = parseFloat(document.getElementById("goldRateLaal").value) || 0;
+      let workerCost = parseFloat(document.getElementById("workerCostLaal").value) || 0;
+
+      let goldWeightTola = goldWeightLaal * LAAL_TO_TOLA;
+      let extraGoldWeightTola = extraGoldWeightLaal * LAAL_TO_TOLA;
+      let goldWeightGram = goldWeightTola * TOLA_TO_GRAM;
+      let extraGoldWeightGram = extraGoldWeightTola * TOLA_TO_GRAM;
+
+      showResults(goldWeightLaal, extraGoldWeightLaal, goldWeightGram, extraGoldWeightGram, goldWeightTola, extraGoldWeightTola, goldRate, workerCost, "resultLaal", "resultGram");
+    }
+
+    function calculateGramBill() {
+      let goldWeightGram = parseFloat(document.getElementById("goldWeightGram").value) || 0;
+      let extraGoldWeightGram = parseFloat(document.getElementById("extraGoldWeightGram").value) || 0;
+      let goldRate = parseFloat(document.getElementById("goldRateGram").value) || 0;
+      let workerCost = parseFloat(document.getElementById("workerCostGram").value) || 0;
+
+      let goldWeightTola = goldWeightGram * GRAM_TO_TOLA;
+      let extraGoldWeightTola = extraGoldWeightGram * GRAM_TO_TOLA;
+      let goldWeightLaal = goldWeightTola * TOLA_TO_LAAL;
+      let extraGoldWeightLaal = extraGoldWeightTola * TOLA_TO_LAAL;
+
+      showResults(goldWeightLaal, extraGoldWeightLaal, goldWeightGram, extraGoldWeightGram, goldWeightTola, extraGoldWeightTola, goldRate, workerCost, "resultLaalGram", "resultGramGram");
+    }
+
+    function showResults(gLaal, exLaal, gGram, exGram, gTola, exTola, rate, worker, laalResultId, gramResultId) {
+      let totalWeightGrams = gGram + exGram;
+      let totalGoldCost = (gTola + exTola) * rate;
+      let totalPrice = totalGoldCost + worker;
+
+      document.getElementById(laalResultId).innerHTML = `
+        सुनको तौल: <strong>${gLaal.toFixed(1)} लाल</strong><br>
+        जर्ति: <strong>${exLaal.toFixed(1)} लाल</strong><br>
+        जम्मा सुनको तौल: <strong>${(gLaal + exLaal).toFixed(1)} लाल</strong><br>
+        जम्मा सुनको रकम: <strong>रु. ${totalGoldCost.toFixed(0)}</strong><br>
+        ज्याला: <strong>रु. ${worker.toFixed(0)}</strong><br>
+        <hr><strong>जम्मा रकम: रु. ${totalPrice.toFixed(0)}</strong>
+      `;
+
+      document.getElementById(gramResultId).innerHTML = `
+        सुनको तौल: <strong>${gGram.toFixed(3)} ग्राम</strong><br>
+        जर्ति: <strong>${exGram.toFixed(3)} ग्राम</strong><br>
+        जम्मा सुनको तौल: <strong>${totalWeightGrams.toFixed(3)} ग्राम</strong><br>
+        जम्मा सुनको रकम: <strong>रु. ${totalGoldCost.toFixed(0)}</strong><br>
+        ज्याला: <strong>रु. ${worker.toFixed(0)}</strong><br>
+        <hr><strong>जम्मा रकम: रु. ${totalPrice.toFixed(0)}</strong>
+      `;
+    }
+  </script>
 </body>
 </html>
